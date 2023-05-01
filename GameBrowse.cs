@@ -13,73 +13,64 @@ using HtmlAgilityPack;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using Diga.WebView2.Wrapper.EventArguments;
-
+using System.Threading.Tasks;
 namespace Gateway
 {
     public partial class GameBrowse : Form
     {
         bool isMax = false;
         string idmPath;
-       
-
         public GameBrowse()
         {
             InitializeComponent();
             this.KeyPreview = true; // enable key events for the form
-            BrowserWb.FrameNavigationCompleted += BrowserWb_FrameNavigationCompleted;
+           // BrowserWb.FrameNavigationCompleted += BrowserWb_FrameNavigationCompleted;
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.GameBrowse_PreviewKeyDown);
             LoadData();
+            // Attach the CoreWebView2Ready event handler
+            BrowserWb.CoreWebView2InitializationCompleted += OnCoreWebView2Ready;
+        }
+
+        private async void OnCoreWebView2Ready(object sender, EventArgs e)
+        {
+            // create a CoreWebView2EnvironmentOptions object
+            CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions();
+
+            // set the UserAgent property to a custom value
+            options.AdditionalBrowserArguments = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 MyCustomApp/1.0 (mydomain.com)";
+
+            // create a CoreWebView2Environment object with the options
+            CoreWebView2Environment env = await CoreWebView2Environment.CreateAsync(null, null, options);
+
+            // Get the CoreWebView2 instance and set the environment
+            var coreWebView2 = BrowserWb.CoreWebView2;
+            //await coreWebView2.Environment.(env);
 
         }
 
-        private void BrowserWb_FrameNavigationCompleted(object sender, NavigationCompletedEventArgs e)
+
+        private void BrowserWb_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
         {
-            BrowserWb.DownloadStarting += (_, downloadArgs) =>
+            BrowserWb.CoreWebView2.DownloadStarting += (_, downloadArgs) =>
             {
-                downloadArgs.Cancel = 1;
+                downloadArgs.Cancel = true;
 
                 // send the download request to IDM
-                string downloadUrl = downloadArgs.ResultFilePath;
-                string arguments = $"/d \"{downloadUrl}\"";
-                Process.Start(idmPath, arguments);
+                Uri downloadUri = new Uri(downloadArgs.DownloadOperation.Uri);
+                string downloadUrl = downloadUri.AbsoluteUri;
+                Process.Start(idmPath, $"/d \"{downloadUrl}\" /p");
             };
 
-            BrowserWb.NewWindowRequested += (_, args) =>
+            BrowserWb.CoreWebView2.NewWindowRequested += (_, args) =>
             {
-                args.Handled = 1;
-                BrowserWb.Navigate(args.uri);
+                args.Handled = true;
+                BrowserWb.CoreWebView2.Navigate(args.Uri);
             };
         }
-
-
-        private void ADDgame_Click(object sender, EventArgs e)
-        {
-            BrowserWb.Navigate("https://repack-games.com/");
-        }
-
-        private void CustomURL_Click(object sender, EventArgs e)
-        {
-            string CusUrl = Microsoft.VisualBasic.Interaction.InputBox("Enter the URL:", "Custom URL", "https://www.example.com");
-            if (Uri.IsWellFormedUriString(CusUrl, UriKind.Absolute))
-            {
-                if (BrowserWb != null)
-                {
-                    BrowserWb.Navigate(CusUrl);
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("Invalid URL.");
-            }
-        }
-
-
         private void ExitBTN_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void MaxmizeBtn_Click(object sender, EventArgs e)
         {
             if (isMax == false)
@@ -93,7 +84,6 @@ namespace Gateway
                 isMax = false;
             }
         }
-
         private void DownloadHubbtn_Click(object sender, EventArgs e)
         {
             // Open IDM
@@ -106,12 +96,9 @@ namespace Gateway
                 MessageBox.Show("IDM is not installed on your machine.");
             }
         }
-
-
-
         private void GameBrowse_Load(object sender, EventArgs e)
         {
-            LoadData();
+            
             // Check if IDM is installed
             try
             {
@@ -138,39 +125,9 @@ namespace Gateway
                 MessageBox.Show("Error occurred while checking for IDM installation: " + ex.Message);
             }
         }
-
-       
-
-
-
-
         private void HidePanelbtn_Click(object sender, EventArgs e)
         {
             Shortpanel.Visible = false;
-        }
-
-        private void GameBrowse_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.P)
-            {
-                Shortpanel.Visible = !Shortpanel.Visible;
-            }
-        }
-
-        private void BrowserWb_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.P)
-            {
-                // Toggle the visibility of the panel here
-                if (Shortpanel.Visible == false)
-                {
-                    Shortpanel.Visible = true;
-                }
-                else
-                {
-                    Shortpanel.Visible = false;
-                }
-            }
         }
         private void GameBrowse_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
@@ -187,21 +144,13 @@ namespace Gateway
                 e.IsInputKey = true; // prevent the control with focus from processing the key event
             }
         }
-
-        private void panel1_MouseHover(object sender, EventArgs e)
-        {
-            MessageBox.Show("Hi");
-        }
-
-
-
         public void AddButton(CustomSitesDatabase customSite)
         {
             Guna2Button gameButton = new Guna2Button();
             gameButton.Size = new Size(85, 38);
             gameButton.Text = customSite.Site_Name;
             gameButton.TextAlign = HorizontalAlignment.Center;
-            gameButton.Font = new Font("Gilroy ExtraBold", 10);
+            gameButton.Font = new Font("Gilroy ExtraBold", 8);
             gameButton.FillColor = Color.Transparent;
             gameButton.Tag = customSite;
             gameButton.Click += GameButton_Click;
@@ -209,18 +158,18 @@ namespace Gateway
             gameButton.MouseUp += GameButton_MouseUp;
             Shortpanel.Controls.Add(gameButton);
         }
-
         private void GameButton_Click(object sender, EventArgs e)
         {
             var button = (Guna2Button)sender;
             var customSite = (CustomSitesDatabase)button.Tag;
             if (Uri.TryCreate(customSite.Site_Url, UriKind.Absolute, out Uri uri))
             {
-                BrowserWb.Navigate(uri.ToString());
+                BrowserWb.CoreWebView2.Navigate(uri.ToString());
             }
+
+            // handle button click event
+            SaveData();
         }
-
-
         private void GameButton_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -237,10 +186,13 @@ namespace Gateway
                 customSite.Site_Url = siteUrl;
                 button.Text = siteName;
             }
-        }
 
+            // handle button click event
+            SaveData();
+        }
         private void GameButton_MouseUp(object sender, MouseEventArgs e)
         {
+
             if (e.Button == MouseButtons.Middle)
             {
                 var button = (Guna2Button)sender;
@@ -248,10 +200,11 @@ namespace Gateway
                 customSitesList.Remove(customSite);
                 Shortpanel.Controls.Remove(button);
             }
+
+            // handle button click event
+            SaveData();
         }
-
         private List<CustomSitesDatabase> customSitesList = new List<CustomSitesDatabase>();
-
         private void PlusShort_Click(object sender, EventArgs e)
         {
             string url = Microsoft.VisualBasic.Interaction.InputBox("Enter the URL:", "Custom URL", "https://www.example.com");
@@ -264,53 +217,58 @@ namespace Gateway
 
             AddButton(customSite);
         }
-
-
-
         private void SaveData()
         {
-            try
+            List<CustomSiteData> customSites = new List<CustomSiteData>();
+
+            foreach (Control control in Shortpanel.Controls)
             {
-                using (FileStream fs = new FileStream("CustomSites.bin", FileMode.Create))
+                if (control is Guna2Button button && button.Tag is CustomSitesDatabase customSite)
                 {
-                    BinaryFormatter formatter = new BinaryFormatter();
-                    formatter.Serialize(fs, customSitesList);
-                    Console.WriteLine("Data saved successfully");
+                    customSites.Add(new CustomSiteData
+                    {
+                        SiteName = customSite.Site_Name,
+                        SiteUrl = customSite.Site_Url
+                    });
                 }
             }
-            catch (Exception ex)
+
+            // serialize the customSites list to an XML file
+            XmlSerializer serializer = new XmlSerializer(typeof(List<CustomSiteData>));
+            using (StreamWriter writer = new StreamWriter("CustomSites.xml"))
             {
-                MessageBox.Show("Error occurred while saving data: " + ex.Message);
+                serializer.Serialize(writer, customSites);
             }
         }
-
-
         private void LoadData()
         {
+            // deserialize the customSites list from the XML file
+            List<CustomSiteData> customSites;
+            XmlSerializer serializer = new XmlSerializer(typeof(List<CustomSiteData>));
             try
             {
-                using (FileStream fs = new FileStream("CustomSites.bin", FileMode.Open))
+                using (StreamReader reader = new StreamReader("CustomSites.xml"))
                 {
-                    BinaryFormatter formatter = new BinaryFormatter();
-                    customSitesList = (List<CustomSitesDatabase>)formatter.Deserialize(fs);
-                    Console.WriteLine("Data loaded successfully");
+                    customSites = (List<CustomSiteData>)serializer.Deserialize(reader);
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("Error occurred while loading data: " + ex.Message);
+                // if the XML file does not exist or is invalid, create an empty list
+                customSites = new List<CustomSiteData>();
+            }
+
+            // create a button for each custom site
+            foreach (CustomSiteData customSiteData in customSites)
+            {
+                CustomSitesDatabase customSite = new CustomSitesDatabase
+                {
+                    Site_Name = customSiteData.SiteName,
+                    Site_Url = customSiteData.SiteUrl
+                };
+                AddButton(customSite);
             }
         }
-
-
-
-
-
-        private void GameBrowse_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            SaveData();
-        }
-
         private void WebBckButton_Click(object sender, EventArgs e)
         {
             //if (BrowserWb.CanGoBack)
@@ -318,7 +276,11 @@ namespace Gateway
           // //     BrowserWb.GoBack();
            // }
         }
-
-
     }
+}
+[Serializable]
+public class CustomSiteData
+{
+    public string SiteName { get; set; }
+    public string SiteUrl { get; set; }
 }
