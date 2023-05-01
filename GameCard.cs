@@ -86,47 +86,12 @@ namespace Gateway
         }
 
 
-        private async void PBgamecover_Click(object sender, EventArgs e)
+        private void PBgamecover_Click(object sender, EventArgs e)
         {
-            // Get the image URL for the specified game
-            string imageUrl = await GetGameImageUrlAsync("Elden Ring");
-
-            // Load the image from the URL
-            Image image = await LoadImageAsync(imageUrl);
-
-            // Set the Image property of the picture box
-            PBgamecover.Image = image;
+            
         }
 
-        private async Task<string> GetGameImageUrlAsync(string gameTitle)
-        {
-            // Build the API query to retrieve the game info
-            string apiUrl = $"https://www.pcgamingwiki.com/w/api.php?action=cargoquery&tables=Infobox_game&fields=Infobox_game.Cover_URL&where=Infobox_game._pageName%3D%22{gameTitle}%22&format=json";
-
-            // Send the API request
-            using (var httpClient = new HttpClient())
-            using (var response = await httpClient.GetAsync(apiUrl))
-            {
-                // Parse the JSON response
-                var json = await response.Content.ReadAsStringAsync();
-                var data = JObject.Parse(json)["cargoquery"]?.FirstOrDefault()?["title"];
-
-                // Return the cover URL, or null if it wasn't found
-                return data?["Cover_URL"]?.ToString();
-            }
-        }
-
-        private async Task<Image> LoadImageAsync(string imageUrl)
-        {
-            // Load the image asynchronously
-            using (var httpClient = new HttpClient())
-            using (var response = await httpClient.GetAsync(imageUrl))
-            using (var stream = await response.Content.ReadAsStreamAsync())
-            {
-                return Image.FromStream(stream);
-            }
-        }
-
+       
 
 
 
