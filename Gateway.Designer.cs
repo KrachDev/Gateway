@@ -46,10 +46,11 @@ namespace Gateway
             this.guna2Shapes2 = new Guna.UI2.WinForms.Guna2Shapes();
             this.guna2Shapes1 = new Guna.UI2.WinForms.Guna2Shapes();
             this.guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(this.components);
-            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.Headerpanel = new Guna.UI2.WinForms.Guna2Panel();
             this.exitbutton = new Guna.UI2.WinForms.Guna2Button();
             this.Aboutbutton = new Guna.UI2.WinForms.Guna2Button();
             this.Gbrowserbtn = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.GamepadButton = new Guna.UI2.WinForms.Guna2Button();
             this.ConsoleBTN = new Guna.UI2.WinForms.Guna2Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -59,8 +60,15 @@ namespace Gateway
             this.AppsFlow = new System.Windows.Forms.FlowLayoutPanel();
             this.GamesFlow = new System.Windows.Forms.FlowLayoutPanel();
             this.grad = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
-            this.testBN = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Panel1.SuspendLayout();
+            this.guna2Shapes9 = new Guna.UI2.WinForms.Guna2Shapes();
+            this.guna2Shapes10 = new Guna.UI2.WinForms.Guna2Shapes();
+            this.guna2Shapes7 = new Guna.UI2.WinForms.Guna2Shapes();
+            this.guna2Shapes6 = new Guna.UI2.WinForms.Guna2Shapes();
+            this.guna2Shapes8 = new Guna.UI2.WinForms.Guna2Shapes();
+            this.guna2Shapes4 = new Guna.UI2.WinForms.Guna2Shapes();
+            this.guna2Shapes5 = new Guna.UI2.WinForms.Guna2Shapes();
+            this.guna2Shapes3 = new Guna.UI2.WinForms.Guna2Shapes();
+            this.Headerpanel.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.grad.SuspendLayout();
@@ -334,20 +342,23 @@ namespace Gateway
             this.guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
             this.guna2BorderlessForm1.TransparentWhileDrag = true;
             // 
-            // guna2Panel1
+            // Headerpanel
             // 
-            this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Panel1.Controls.Add(this.exitbutton);
-            this.guna2Panel1.Controls.Add(this.Aboutbutton);
-            this.guna2Panel1.Controls.Add(this.Gbrowserbtn);
-            this.guna2Panel1.Controls.Add(this.testBN);
-            this.guna2Panel1.Controls.Add(this.GamepadButton);
-            this.guna2Panel1.Controls.Add(this.ConsoleBTN);
-            this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
-            this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(790, 51);
-            this.guna2Panel1.TabIndex = 3;
+            this.Headerpanel.BackColor = System.Drawing.Color.Transparent;
+            this.Headerpanel.Controls.Add(this.exitbutton);
+            this.Headerpanel.Controls.Add(this.Aboutbutton);
+            this.Headerpanel.Controls.Add(this.Gbrowserbtn);
+            this.Headerpanel.Controls.Add(this.guna2Button1);
+            this.Headerpanel.Controls.Add(this.GamepadButton);
+            this.Headerpanel.Controls.Add(this.ConsoleBTN);
+            this.Headerpanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Headerpanel.Location = new System.Drawing.Point(0, 0);
+            this.Headerpanel.Name = "Headerpanel";
+            this.Headerpanel.Size = new System.Drawing.Size(790, 51);
+            this.Headerpanel.TabIndex = 3;
+            this.Headerpanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Headerpanel_MouseDown);
+            this.Headerpanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Headerpanel_MouseMove);
+            this.Headerpanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Headerpanel_MouseUp);
             // 
             // exitbutton
             // 
@@ -427,6 +438,32 @@ namespace Gateway
             this.Gbrowserbtn.Text = "Games Browser";
             this.Gbrowserbtn.Click += new System.EventHandler(this.GameBrowse_Click);
             // 
+            // guna2Button1
+            // 
+            this.guna2Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Button1.Animated = true;
+            this.guna2Button1.AutoRoundedCorners = true;
+            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button1.BorderColor = System.Drawing.Color.Brown;
+            this.guna2Button1.BorderRadius = 18;
+            this.guna2Button1.CustomBorderColor = System.Drawing.Color.Indigo;
+            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button1.FillColor = System.Drawing.Color.Transparent;
+            this.guna2Button1.Font = new System.Drawing.Font("Gilroy ExtraBold", 9.5F, System.Drawing.FontStyle.Bold);
+            this.guna2Button1.ForeColor = System.Drawing.Color.White;
+            this.guna2Button1.HoverState.BorderColor = System.Drawing.Color.DarkGreen;
+            this.guna2Button1.HoverState.CustomBorderColor = System.Drawing.Color.DarkGreen;
+            this.guna2Button1.HoverState.FillColor = System.Drawing.Color.DarkGreen;
+            this.guna2Button1.Location = new System.Drawing.Point(123, 3);
+            this.guna2Button1.Name = "guna2Button1";
+            this.guna2Button1.Size = new System.Drawing.Size(118, 38);
+            this.guna2Button1.TabIndex = 0;
+            this.guna2Button1.Text = "*OverLay";
+            this.guna2Button1.Click += new System.EventHandler(this.gamepadBTN_Click);
+            // 
             // GamepadButton
             // 
             this.GamepadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -486,7 +523,7 @@ namespace Gateway
             this.flowLayoutPanel1.Controls.Add(this.addgm);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 57);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(77, 235);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(75, 235);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
             // addgm
@@ -506,7 +543,7 @@ namespace Gateway
             this.addgm.ForeColor = System.Drawing.Color.White;
             this.addgm.Location = new System.Drawing.Point(3, 3);
             this.addgm.Name = "addgm";
-            this.addgm.Size = new System.Drawing.Size(74, 38);
+            this.addgm.Size = new System.Drawing.Size(72, 38);
             this.addgm.TabIndex = 0;
             this.addgm.Text = "ADD GAME";
             this.addgm.Click += new System.EventHandler(this.ADDgame_Click);
@@ -562,11 +599,19 @@ namespace Gateway
             // 
             // grad
             // 
+            this.grad.Controls.Add(this.guna2Shapes9);
+            this.grad.Controls.Add(this.guna2Shapes10);
+            this.grad.Controls.Add(this.guna2Shapes7);
+            this.grad.Controls.Add(this.guna2Shapes6);
+            this.grad.Controls.Add(this.guna2Shapes8);
+            this.grad.Controls.Add(this.guna2Shapes4);
+            this.grad.Controls.Add(this.guna2Shapes5);
+            this.grad.Controls.Add(this.guna2Shapes3);
             this.grad.Controls.Add(this.GamesFlow);
             this.grad.Controls.Add(this.AppsFlow);
             this.grad.Controls.Add(this.flowLayoutPanel2);
             this.grad.Controls.Add(this.flowLayoutPanel1);
-            this.grad.Controls.Add(this.guna2Panel1);
+            this.grad.Controls.Add(this.Headerpanel);
             this.grad.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grad.FillColor = System.Drawing.Color.Indigo;
             this.grad.FillColor2 = System.Drawing.Color.Black;
@@ -582,31 +627,145 @@ namespace Gateway
             this.grad.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Mainpanel_MouseMove);
             this.grad.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Mainpanel_MouseUp);
             // 
-            // testBN
+            // guna2Shapes9
             // 
-            this.testBN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.testBN.Animated = true;
-            this.testBN.AutoRoundedCorners = true;
-            this.testBN.BackColor = System.Drawing.Color.Transparent;
-            this.testBN.BorderColor = System.Drawing.Color.Brown;
-            this.testBN.BorderRadius = 18;
-            this.testBN.CustomBorderColor = System.Drawing.Color.Indigo;
-            this.testBN.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.testBN.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.testBN.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.testBN.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.testBN.FillColor = System.Drawing.Color.Transparent;
-            this.testBN.Font = new System.Drawing.Font("Gilroy ExtraBold", 9.5F, System.Drawing.FontStyle.Bold);
-            this.testBN.ForeColor = System.Drawing.Color.White;
-            this.testBN.HoverState.BorderColor = System.Drawing.Color.DarkGreen;
-            this.testBN.HoverState.CustomBorderColor = System.Drawing.Color.DarkGreen;
-            this.testBN.HoverState.FillColor = System.Drawing.Color.DarkGreen;
-            this.testBN.Location = new System.Drawing.Point(256, 3);
-            this.testBN.Name = "testBN";
-            this.testBN.Size = new System.Drawing.Size(118, 38);
-            this.testBN.TabIndex = 0;
-            this.testBN.Text = "GMCARDTEST";
-            this.testBN.Click += new System.EventHandler(this.gamepadBTN_Click);
+            this.guna2Shapes9.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Shapes9.FillColor = System.Drawing.Color.WhiteSmoke;
+            this.guna2Shapes9.LineEndCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes9.LineStartCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes9.LineThickness = 2;
+            this.guna2Shapes9.Location = new System.Drawing.Point(421, 47);
+            this.guna2Shapes9.Name = "guna2Shapes9";
+            this.guna2Shapes9.PolygonSkip = 1;
+            this.guna2Shapes9.Rotate = 0F;
+            this.guna2Shapes9.Shape = Guna.UI2.WinForms.Enums.ShapeType.Line;
+            this.guna2Shapes9.Size = new System.Drawing.Size(274, 16);
+            this.guna2Shapes9.TabIndex = 5;
+            this.guna2Shapes9.Text = "guna2Shapes3";
+            this.guna2Shapes9.Zoom = 80;
+            // 
+            // guna2Shapes10
+            // 
+            this.guna2Shapes10.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Shapes10.FillColor = System.Drawing.Color.WhiteSmoke;
+            this.guna2Shapes10.LineEndCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes10.LineStartCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes10.LineThickness = 2;
+            this.guna2Shapes10.Location = new System.Drawing.Point(421, 285);
+            this.guna2Shapes10.Name = "guna2Shapes10";
+            this.guna2Shapes10.PolygonSkip = 1;
+            this.guna2Shapes10.Rotate = 0F;
+            this.guna2Shapes10.Shape = Guna.UI2.WinForms.Enums.ShapeType.Line;
+            this.guna2Shapes10.Size = new System.Drawing.Size(274, 16);
+            this.guna2Shapes10.TabIndex = 5;
+            this.guna2Shapes10.Text = "guna2Shapes3";
+            this.guna2Shapes10.Zoom = 80;
+            // 
+            // guna2Shapes7
+            // 
+            this.guna2Shapes7.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Shapes7.FillColor = System.Drawing.Color.WhiteSmoke;
+            this.guna2Shapes7.LineEndCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes7.LineStartCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes7.LineThickness = 2;
+            this.guna2Shapes7.Location = new System.Drawing.Point(93, 285);
+            this.guna2Shapes7.Name = "guna2Shapes7";
+            this.guna2Shapes7.PolygonSkip = 1;
+            this.guna2Shapes7.Rotate = 0F;
+            this.guna2Shapes7.Shape = Guna.UI2.WinForms.Enums.ShapeType.Line;
+            this.guna2Shapes7.Size = new System.Drawing.Size(274, 16);
+            this.guna2Shapes7.TabIndex = 5;
+            this.guna2Shapes7.Text = "guna2Shapes3";
+            this.guna2Shapes7.Zoom = 80;
+            // 
+            // guna2Shapes6
+            // 
+            this.guna2Shapes6.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Shapes6.FillColor = System.Drawing.Color.WhiteSmoke;
+            this.guna2Shapes6.LineEndCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes6.LineOrientation = System.Windows.Forms.Orientation.Vertical;
+            this.guna2Shapes6.LineStartCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes6.LineThickness = 2;
+            this.guna2Shapes6.Location = new System.Drawing.Point(415, 47);
+            this.guna2Shapes6.Name = "guna2Shapes6";
+            this.guna2Shapes6.PolygonSkip = 1;
+            this.guna2Shapes6.Rotate = 0F;
+            this.guna2Shapes6.Shape = Guna.UI2.WinForms.Enums.ShapeType.Line;
+            this.guna2Shapes6.Size = new System.Drawing.Size(19, 254);
+            this.guna2Shapes6.TabIndex = 5;
+            this.guna2Shapes6.Text = "guna2Shapes3";
+            this.guna2Shapes6.Zoom = 80;
+            // 
+            // guna2Shapes8
+            // 
+            this.guna2Shapes8.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Shapes8.FillColor = System.Drawing.Color.WhiteSmoke;
+            this.guna2Shapes8.LineEndCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes8.LineStartCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes8.LineThickness = 2;
+            this.guna2Shapes8.Location = new System.Drawing.Point(93, 47);
+            this.guna2Shapes8.Name = "guna2Shapes8";
+            this.guna2Shapes8.PolygonSkip = 1;
+            this.guna2Shapes8.Rotate = 0F;
+            this.guna2Shapes8.Shape = Guna.UI2.WinForms.Enums.ShapeType.Line;
+            this.guna2Shapes8.Size = new System.Drawing.Size(274, 16);
+            this.guna2Shapes8.TabIndex = 5;
+            this.guna2Shapes8.Text = "guna2Shapes3";
+            this.guna2Shapes8.Zoom = 80;
+            // 
+            // guna2Shapes4
+            // 
+            this.guna2Shapes4.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Shapes4.FillColor = System.Drawing.Color.WhiteSmoke;
+            this.guna2Shapes4.LineEndCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes4.LineOrientation = System.Windows.Forms.Orientation.Vertical;
+            this.guna2Shapes4.LineStartCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes4.LineThickness = 2;
+            this.guna2Shapes4.Location = new System.Drawing.Point(82, 57);
+            this.guna2Shapes4.Name = "guna2Shapes4";
+            this.guna2Shapes4.PolygonSkip = 1;
+            this.guna2Shapes4.Rotate = 0F;
+            this.guna2Shapes4.Shape = Guna.UI2.WinForms.Enums.ShapeType.Line;
+            this.guna2Shapes4.Size = new System.Drawing.Size(18, 235);
+            this.guna2Shapes4.TabIndex = 5;
+            this.guna2Shapes4.Text = "guna2Shapes3";
+            this.guna2Shapes4.Zoom = 80;
+            // 
+            // guna2Shapes5
+            // 
+            this.guna2Shapes5.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Shapes5.FillColor = System.Drawing.Color.WhiteSmoke;
+            this.guna2Shapes5.LineEndCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes5.LineOrientation = System.Windows.Forms.Orientation.Vertical;
+            this.guna2Shapes5.LineStartCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes5.LineThickness = 2;
+            this.guna2Shapes5.Location = new System.Drawing.Point(688, 47);
+            this.guna2Shapes5.Name = "guna2Shapes5";
+            this.guna2Shapes5.PolygonSkip = 1;
+            this.guna2Shapes5.Rotate = 0F;
+            this.guna2Shapes5.Shape = Guna.UI2.WinForms.Enums.ShapeType.Line;
+            this.guna2Shapes5.Size = new System.Drawing.Size(19, 245);
+            this.guna2Shapes5.TabIndex = 5;
+            this.guna2Shapes5.Text = "guna2Shapes3";
+            this.guna2Shapes5.Zoom = 80;
+            // 
+            // guna2Shapes3
+            // 
+            this.guna2Shapes3.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Shapes3.FillColor = System.Drawing.Color.WhiteSmoke;
+            this.guna2Shapes3.LineEndCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes3.LineOrientation = System.Windows.Forms.Orientation.Vertical;
+            this.guna2Shapes3.LineStartCap = System.Drawing.Drawing2D.LineCap.Round;
+            this.guna2Shapes3.LineThickness = 2;
+            this.guna2Shapes3.Location = new System.Drawing.Point(355, 47);
+            this.guna2Shapes3.Name = "guna2Shapes3";
+            this.guna2Shapes3.PolygonSkip = 1;
+            this.guna2Shapes3.Rotate = 0F;
+            this.guna2Shapes3.Shape = Guna.UI2.WinForms.Enums.ShapeType.Line;
+            this.guna2Shapes3.Size = new System.Drawing.Size(19, 257);
+            this.guna2Shapes3.TabIndex = 5;
+            this.guna2Shapes3.Text = "guna2Shapes3";
+            this.guna2Shapes3.Zoom = 80;
             // 
             // Gateway
             // 
@@ -622,7 +781,7 @@ namespace Gateway
             this.Text = "Gateway";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Gateway_FormClosing);
             this.Load += new System.EventHandler(this.Gateway_Load);
-            this.guna2Panel1.ResumeLayout(false);
+            this.Headerpanel.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.grad.ResumeLayout(false);
@@ -654,13 +813,21 @@ namespace Gateway
         private Guna.UI2.WinForms.Guna2Button guna2Button6;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private Guna.UI2.WinForms.Guna2Button addgm;
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private Guna.UI2.WinForms.Guna2Panel Headerpanel;
         private Guna.UI2.WinForms.Guna2Button exitbutton;
         private Guna.UI2.WinForms.Guna2Button Aboutbutton;
         private Guna.UI2.WinForms.Guna2Button GamepadButton;
         private Guna.UI2.WinForms.Guna2Button ConsoleBTN;
         private Guna.UI2.WinForms.Guna2Button Gbrowserbtn;
-        private Guna.UI2.WinForms.Guna2Button testBN;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2Shapes guna2Shapes9;
+        private Guna.UI2.WinForms.Guna2Shapes guna2Shapes10;
+        private Guna.UI2.WinForms.Guna2Shapes guna2Shapes7;
+        private Guna.UI2.WinForms.Guna2Shapes guna2Shapes6;
+        private Guna.UI2.WinForms.Guna2Shapes guna2Shapes8;
+        private Guna.UI2.WinForms.Guna2Shapes guna2Shapes4;
+        private Guna.UI2.WinForms.Guna2Shapes guna2Shapes5;
+        private Guna.UI2.WinForms.Guna2Shapes guna2Shapes3;
     }
 }
 

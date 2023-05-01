@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Guna.UI2.WinForms;
 using System.Drawing;
 using Newtonsoft.Json;
+using System.Linq;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 namespace Gateway
@@ -18,7 +19,7 @@ namespace Gateway
     {
         private bool isDragging = false;
         private Point lastLocation;
-        
+        private Stopwatch gameTimer = new Stopwatch();
         private ContextMenuStrip contextMenu = new ContextMenuStrip();
         // GAMES DATA
         private const string GAMES_FILE_PATH = "games.json";
@@ -69,7 +70,39 @@ namespace Gateway
         {
             
         }
-        
+
+        public static string GetGameFolderSize(string gameFolder)
+        {
+            long size = 0;
+
+            try
+            {
+                DirectoryInfo di = new DirectoryInfo(gameFolder);
+
+                // Get the size of all files in the directory and subdirectories
+                foreach (FileInfo fi in di.EnumerateFiles("*", SearchOption.AllDirectories))
+                {
+                    size += fi.Length;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return "Unknown";
+            }
+
+            // Convert the size to a readable format (e.g. "1.23 GB")
+            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+            int order = 0;
+            while (size >= 1024 && order < sizes.Length - 1)
+            {
+                size /= 1024;
+                order++;
+            }
+
+            return String.Format("{0:0.##} {1}", size, sizes[order]);
+        }
+
 
         private void ADDgame_Click(object sender, EventArgs e)
         {
@@ -122,6 +155,18 @@ namespace Gateway
         private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
         private void AddGameButton(GameData gameData)
         {
+            // Check if the GameSize property is empty
+            if (string.IsNullOrEmpty(gameData.GameSize))
+            {
+                // Calculate the game size and update the GameSize property
+                string gameFolder = Path.GetDirectoryName(gameData.GameFolder);
+                string gameSize = GetGameFolderSize(gameFolder);
+                gameData.GameSize = gameSize;
+
+                // Show a message box with the game size
+                MessageBox.Show($"The game size is {gameSize}");
+            }
+
             Guna2Button gameButton = new Guna2Button();
             gameButton.Image = Icon.ExtractAssociatedIcon(gameData.GameFolder).ToBitmap();
             gameButton.Tag = gameData;
@@ -131,6 +176,7 @@ namespace Gateway
             gameButton.MouseDown += GameButton_MouseUp; // new event handler for MouseDown
             GamesFlow.Controls.Add(gameButton);
         }
+
         private void AddAppButton(AppData appData)
         {
             Guna2Button appButton = new Guna2Button();
@@ -182,20 +228,11 @@ namespace Gateway
         
         private void GameButton_Click(object sender, EventArgs e)
         {
-            GameData gameData = (GameData)((Guna2Button)sender).Tag;
-
-            // Start a new process to launch the game
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = gameData.GameFolder;
-            startInfo.WorkingDirectory = Path.GetDirectoryName(gameData.GameFolder);
-            Process process = new Process();
-            process.StartInfo = startInfo;
-            process.Start();
+            
         }
         private void GameButton_MouseUp(object sender, MouseEventArgs e)
         {
-            
-
+        
             // Check if the middle mouse button is clicked
             if (e.Button == MouseButtons.Middle)
             {
@@ -213,7 +250,50 @@ namespace Gateway
                 string gamesJson = JsonConvert.SerializeObject(gamesData);
                 File.WriteAllText(GAMES_FILE_PATH, gamesJson);
             }
+            if (e.Button == MouseButtons.Right)
+            {
+                Guna2Button gameButton = (Guna2Button)sender;
+                GameData gameData = (GameData)gameButton.Tag;
+
+                // Start the game timer
+                gameTimer.Start();
+
+                // Launch the game and add event handler for Process.Exited event
+                Process process = new Process();
+                process.StartInfo.FileName = gameData.GameFolder;
+                process.EnableRaisingEvents = true;
+                process.Exited += Process_Exited;
+                process.Start();
+            }
+            if (e.Button == MouseButtons.Left)
+            {
+                GameData gameData = (GameData)((Guna2Button)sender).Tag;
+                GameCard GC = new GameCard(gameData);
+                GC.ShowDialog();
+
+            }
         }
+
+        private void Process_Exited(object sender, EventArgs e)
+        {
+            // Get the game data for the exited process
+            Process process = (Process)sender;
+            GameData gameData = gamesData.FirstOrDefault(g => g.GameFolder == process.StartInfo.FileName);
+
+            if (gameData != null)
+            {
+                // Stop the game timer
+                gameTimer.Stop();
+
+                // Update the game time
+                gameData.GameTime += gameTimer.Elapsed;
+
+                // Save games data to JSON file
+                string gamesJson = JsonConvert.SerializeObject(gamesData);
+                File.WriteAllText(GAMES_FILE_PATH, gamesJson);
+            }
+        }
+
         private void ADDapp_Click(object sender, EventArgs e)
         {
             
@@ -309,8 +389,8 @@ namespace Gateway
         }
         private void gamepadBTN_Click(object sender, EventArgs e)
         {
-            GameCard GC = new GameCard();
-            GC.Show(); // Show the new form
+            //GameCard GC = new GameCard();
+            //GC.Show(); // Show the new form
         }
         private void AboutBTN_Click(object sender, EventArgs e)
         {
@@ -405,6 +485,27 @@ namespace Gateway
             }
         }
 
+        private void Headerpanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            isDragging = true;
+            lastLocation = e.Location;
+        }
+
+        private void Headerpanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+
+                this.Update();
+            }
+        }
+
+        private void Headerpanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDragging = false;
+        }
     }
 }
 

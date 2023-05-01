@@ -29,9 +29,11 @@ namespace Gateway
 
         private void ABOUTFORM_Load(object sender, EventArgs e)
         {
-            verlvl.Text = Application.ProductVersion;
-
+            string version = System.Diagnostics.FileVersionInfo.GetVersionInfo(
+                System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;
+            verlvl.Text = version;
         }
+
 
         private void VersionLbl_Click(object sender, EventArgs e)
         {
