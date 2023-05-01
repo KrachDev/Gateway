@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using RestSharp;
+using Newtonsoft.Json;
 using System.Windows.Forms;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Win32;
@@ -15,6 +17,9 @@ using System.Xml.Serialization;
 using Diga.WebView2.Wrapper.EventArguments;
 using Microsoft.Web.WebView2.WinForms;
 using System.Net;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+
 namespace Gateway
 {
     public partial class GameCard : Form
@@ -80,17 +85,65 @@ namespace Gateway
             this.Close();
         }
 
-        private void PBgamecover_Click(object sender, EventArgs e)
-        {
-            string url = "https://www.tutorialspoint.com/assets/profiles/538106/profile/200_1039031-1666073315.jpg";
-            string imagePath = Path.Combine(Application.StartupPath, "temp.jpg");
-            WebClient client = new WebClient();
-            client.DownloadFile(url, imagePath);
-            PBgamecover.Image = Image.FromFile(imagePath);
 
+        private async void PBgamecover_Click(object sender, EventArgs e)
+        {
+            // Get the image URL for the specified game
+            string imageUrl = await GetGameImageUrlAsync("Elden Ring");
+
+            // Load the image from the URL
+            Image image = await LoadImageAsync(imageUrl);
+
+            // Set the Image property of the picture box
+            PBgamecover.Image = image;
+        }
+
+        private async Task<string> GetGameImageUrlAsync(string gameTitle)
+        {
+            // Build the API query to retrieve the game info
+            string apiUrl = $"https://www.pcgamingwiki.com/w/api.php?action=cargoquery&tables=Infobox_game&fields=Infobox_game.Cover_URL&where=Infobox_game._pageName%3D%22{gameTitle}%22&format=json";
+
+            // Send the API request
+            using (var httpClient = new HttpClient())
+            using (var response = await httpClient.GetAsync(apiUrl))
+            {
+                // Parse the JSON response
+                var json = await response.Content.ReadAsStringAsync();
+                var data = JObject.Parse(json)["cargoquery"]?.FirstOrDefault()?["title"];
+
+                // Return the cover URL, or null if it wasn't found
+                return data?["Cover_URL"]?.ToString();
+            }
+        }
+
+        private async Task<Image> LoadImageAsync(string imageUrl)
+        {
+            // Load the image asynchronously
+            using (var httpClient = new HttpClient())
+            using (var response = await httpClient.GetAsync(imageUrl))
+            using (var stream = await response.Content.ReadAsStreamAsync())
+            {
+                return Image.FromStream(stream);
+            }
         }
 
 
+
+
+        private void WBreloadBTN_Click(object sender, EventArgs e)
+        {
+            browsWB.Refresh();
+        }
+
+        private void backWBBTN_Click(object sender, EventArgs e)
+        {
+            browsWB.GoBack();
+        }
+
+        private void ForwardWBBTN_Click(object sender, EventArgs e)
+        {
+            browsWB.GoForward();
+        }
     }
 
 }
