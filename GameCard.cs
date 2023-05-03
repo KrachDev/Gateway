@@ -26,12 +26,15 @@ using System.Text.Json;
 using System.Web.Script.Serialization;
 using System.Net.Http.Headers;
 using AForge.Video.DirectShow;
+
 using System.Runtime.InteropServices;
+
 
 namespace Gateway
 {
     public partial class GameCard : Form
     {
+
         private bool isDragging = false;
         private Point lastLocation;
         private Stopwatch gameTimer = new Stopwatch();
@@ -61,13 +64,23 @@ namespace Gateway
 
             TSpentlbl.Text = gameData.GameTime.ToString();
 
-            
 
         }
+
+
+
+
+
 
         private async void PBgamecover_Click(object sender, EventArgs e)
         {
             /*
+
+
+
+        private async void PBgamecover_Click(object sender, EventArgs e)
+        {
+
             string gameName3 = Microsoft.VisualBasic.Interaction.InputBox("Enter the name of the game", "Game Name", "Elden Ring");
             HttpClient client = new HttpClient();
             string url = "https://api.rawg.io/api/games?search=" + gameName3 + api;
@@ -78,28 +91,11 @@ namespace Gateway
             Image image = DownloadImage(coverUrl);
             PBgamecover.Image = ResizeImage(image, PBgamecover.Size);
             //grad.BackgroundImage = PBgamecover.Image;
+
             */
+
         }
-        private Image DownloadImage(string url)
-        {
-            using (WebClient client = new WebClient())
-            {
-                byte[] imageData = client.DownloadData(url);
-                using (MemoryStream stream = new MemoryStream(imageData))
-                {
-                    return Image.FromStream(stream);
-                }
-            }
-        }
-        private Image ResizeImage(Image image, Size size)
-        {
-            Bitmap result = new Bitmap(size.Width, size.Height);
-            using (Graphics graphics = Graphics.FromImage(result))
-            {
-                graphics.DrawImage(image, new Rectangle(Point.Empty, size));
-            }
-            return result;
-        }
+
         private async void PoplateBTN_Click(object sender, EventArgs e)
         {
             AutoFill();
@@ -113,12 +109,9 @@ namespace Gateway
             string jsonResponse = await response.Content.ReadAsStringAsync();
             dynamic responseObject = JsonConvert.DeserializeObject(jsonResponse);
             string coverUrl = responseObject.results[0].background_image;
-            Image image = DownloadImage(coverUrl);
-            PBgamecover.Image = ResizeImage(image, PBgamecover.Size);
 
-            // Game name
-            string name = responseObject.results[0].name;
-            Nlbl.Text = name;
+            PBgamecover.Load(coverUrl);
+
 
             // Release date
             string releaseDate = responseObject.results[0].released;
@@ -134,15 +127,50 @@ namespace Gateway
 
             //afterwards
             gameData.Name = gameName;
+
+
+
+
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         private void ExitBTN_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
+
+        private void waveViewer1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void elementHost1_ChildChanged(object sender, System.Windows.Forms.Integration.ChildChangedEventArgs e)
+        {
+
+        }
+
+
+
         private void GameCard_Load(object sender, EventArgs e)
         {
-            
+
         }
+
         private void LoadGames()
         {
             if (File.Exists(GAMES_FILE_PATH))
@@ -176,7 +204,7 @@ namespace Gateway
 
         private void LaunchBTN_Click(object sender, EventArgs e)
         {
-            
+
 
             // Start the game timer
             gameTimer.Start();
@@ -246,5 +274,8 @@ namespace Gateway
         {
             TSpentlbl.Text = gameData.GameTime.ToString();
         }
+
+
+
     }
 }
