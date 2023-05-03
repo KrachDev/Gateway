@@ -68,6 +68,7 @@ namespace Gateway
             this.guna2Shapes4 = new Guna.UI2.WinForms.Guna2Shapes();
             this.guna2Shapes5 = new Guna.UI2.WinForms.Guna2Shapes();
             this.guna2Shapes3 = new Guna.UI2.WinForms.Guna2Shapes();
+            this.TestButton = new Guna.UI2.WinForms.Guna2Button();
             this.Headerpanel.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -348,6 +349,7 @@ namespace Gateway
             this.Headerpanel.Controls.Add(this.exitbutton);
             this.Headerpanel.Controls.Add(this.Aboutbutton);
             this.Headerpanel.Controls.Add(this.Gbrowserbtn);
+            this.Headerpanel.Controls.Add(this.TestButton);
             this.Headerpanel.Controls.Add(this.guna2Button1);
             this.Headerpanel.Controls.Add(this.GamepadButton);
             this.Headerpanel.Controls.Add(this.ConsoleBTN);
@@ -462,7 +464,6 @@ namespace Gateway
             this.guna2Button1.Size = new System.Drawing.Size(118, 38);
             this.guna2Button1.TabIndex = 0;
             this.guna2Button1.Text = "*OverLay";
-            this.guna2Button1.Click += new System.EventHandler(this.gamepadBTN_Click);
             // 
             // GamepadButton
             // 
@@ -767,6 +768,32 @@ namespace Gateway
             this.guna2Shapes3.Text = "guna2Shapes3";
             this.guna2Shapes3.Zoom = 80;
             // 
+            // TestButton
+            // 
+            this.TestButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.TestButton.Animated = true;
+            this.TestButton.AutoRoundedCorners = true;
+            this.TestButton.BackColor = System.Drawing.Color.Transparent;
+            this.TestButton.BorderColor = System.Drawing.Color.Brown;
+            this.TestButton.BorderRadius = 18;
+            this.TestButton.CustomBorderColor = System.Drawing.Color.Indigo;
+            this.TestButton.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.TestButton.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.TestButton.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.TestButton.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.TestButton.FillColor = System.Drawing.Color.Transparent;
+            this.TestButton.Font = new System.Drawing.Font("Gilroy ExtraBold", 9.5F, System.Drawing.FontStyle.Bold);
+            this.TestButton.ForeColor = System.Drawing.Color.White;
+            this.TestButton.HoverState.BorderColor = System.Drawing.Color.DarkGreen;
+            this.TestButton.HoverState.CustomBorderColor = System.Drawing.Color.DarkGreen;
+            this.TestButton.HoverState.FillColor = System.Drawing.Color.DarkGreen;
+            this.TestButton.Location = new System.Drawing.Point(256, 3);
+            this.TestButton.Name = "TestButton";
+            this.TestButton.Size = new System.Drawing.Size(118, 38);
+            this.TestButton.TabIndex = 0;
+            this.TestButton.Text = "Search";
+            this.TestButton.Click += new System.EventHandler(this.TestButton_Click);
+            // 
             // Gateway
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -828,6 +855,7 @@ namespace Gateway
         private Guna.UI2.WinForms.Guna2Shapes guna2Shapes4;
         private Guna.UI2.WinForms.Guna2Shapes guna2Shapes5;
         private Guna.UI2.WinForms.Guna2Shapes guna2Shapes3;
+        private Guna.UI2.WinForms.Guna2Button TestButton;
     }
 }
 

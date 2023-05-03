@@ -37,11 +37,11 @@ namespace Gateway
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.ogamefolderBTN = new Guna.UI2.WinForms.Guna2Button();
             this.PoplateBTN = new Guna.UI2.WinForms.Guna2Button();
-            this.PBgamecover = new Guna.UI2.WinForms.Guna2PictureBox();
             this.Descriptionpanel = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.GameDescriptionLBL = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Rlbl = new Guna.UI2.WinForms.Guna2RatingStar();
             this.pbsaveupload = new Guna.UI2.WinForms.Guna2CircleProgressBar();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -52,25 +52,26 @@ namespace Gateway
             this.label4 = new System.Windows.Forms.Label();
             this.TSpentlbl = new System.Windows.Forms.Label();
             this.SZlbl = new System.Windows.Forms.Label();
+            this.Rdate = new System.Windows.Forms.Label();
             this.svlolbl = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.dateLBL = new System.Windows.Forms.Label();
             this.SizeLBL = new System.Windows.Forms.Label();
+            this.Nlbl = new System.Windows.Forms.Label();
             this.gmfolbl = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.NameLBL = new System.Windows.Forms.Label();
             this.Headerpanel = new Guna.UI2.WinForms.Guna2Panel();
             this.exitbutton = new Guna.UI2.WinForms.Guna2Button();
-            this.Nlbl = new System.Windows.Forms.Label();
-            this.Rdate = new System.Windows.Forms.Label();
-            this.Rlbl = new Guna.UI2.WinForms.Guna2RatingStar();
+            this.rattextlbl = new System.Windows.Forms.Label();
+            this.PBgamecover = new Guna.UI2.WinForms.Guna2PictureBox();
             this.grad.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PBgamecover)).BeginInit();
             this.Descriptionpanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BrowseWb)).BeginInit();
             this.Headerpanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PBgamecover)).BeginInit();
             this.SuspendLayout();
             // 
             // GCMP
@@ -101,10 +102,6 @@ namespace Gateway
             // 
             this.panel2.BackColor = System.Drawing.Color.Transparent;
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel2.Controls.Add(this.LaunchBTN);
-            this.panel2.Controls.Add(this.guna2Button2);
-            this.panel2.Controls.Add(this.ogamefolderBTN);
-            this.panel2.Controls.Add(this.PoplateBTN);
             this.panel2.Controls.Add(this.PBgamecover);
             this.panel2.Controls.Add(this.Descriptionpanel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
@@ -132,7 +129,7 @@ namespace Gateway
             this.LaunchBTN.HoverState.CustomBorderColor = System.Drawing.Color.DarkGreen;
             this.LaunchBTN.HoverState.FillColor = System.Drawing.Color.DarkGreen;
             this.LaunchBTN.HoverState.ForeColor = System.Drawing.Color.LavenderBlush;
-            this.LaunchBTN.Location = new System.Drawing.Point(255, 149);
+            this.LaunchBTN.Location = new System.Drawing.Point(6, 7);
             this.LaunchBTN.Name = "LaunchBTN";
             this.LaunchBTN.Size = new System.Drawing.Size(90, 38);
             this.LaunchBTN.TabIndex = 0;
@@ -158,7 +155,7 @@ namespace Gateway
             this.guna2Button2.HoverState.CustomBorderColor = System.Drawing.Color.MediumPurple;
             this.guna2Button2.HoverState.FillColor = System.Drawing.Color.MediumPurple;
             this.guna2Button2.HoverState.ForeColor = System.Drawing.Color.LavenderBlush;
-            this.guna2Button2.Location = new System.Drawing.Point(255, 100);
+            this.guna2Button2.Location = new System.Drawing.Point(277, 7);
             this.guna2Button2.Name = "guna2Button2";
             this.guna2Button2.Size = new System.Drawing.Size(90, 38);
             this.guna2Button2.TabIndex = 0;
@@ -184,7 +181,7 @@ namespace Gateway
             this.ogamefolderBTN.HoverState.CustomBorderColor = System.Drawing.Color.MediumPurple;
             this.ogamefolderBTN.HoverState.FillColor = System.Drawing.Color.MediumPurple;
             this.ogamefolderBTN.HoverState.ForeColor = System.Drawing.Color.LavenderBlush;
-            this.ogamefolderBTN.Location = new System.Drawing.Point(255, 50);
+            this.ogamefolderBTN.Location = new System.Drawing.Point(198, 4);
             this.ogamefolderBTN.Name = "ogamefolderBTN";
             this.ogamefolderBTN.Size = new System.Drawing.Size(96, 44);
             this.ogamefolderBTN.TabIndex = 0;
@@ -210,27 +207,12 @@ namespace Gateway
             this.PoplateBTN.HoverState.CustomBorderColor = System.Drawing.Color.MediumPurple;
             this.PoplateBTN.HoverState.FillColor = System.Drawing.Color.MediumPurple;
             this.PoplateBTN.HoverState.ForeColor = System.Drawing.Color.LavenderBlush;
-            this.PoplateBTN.Location = new System.Drawing.Point(255, 6);
+            this.PoplateBTN.Location = new System.Drawing.Point(102, 7);
             this.PoplateBTN.Name = "PoplateBTN";
             this.PoplateBTN.Size = new System.Drawing.Size(90, 38);
             this.PoplateBTN.TabIndex = 0;
-            this.PoplateBTN.Text = "Poplaute";
-            this.PoplateBTN.Click += new System.EventHandler(this.PoplateBTN_Click);
-            // 
-            // PBgamecover
-            // 
-            this.PBgamecover.BackColor = System.Drawing.Color.MediumPurple;
-            this.PBgamecover.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.PBgamecover.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.PBgamecover.FillColor = System.Drawing.Color.Transparent;
-            this.PBgamecover.ImageRotate = 0F;
-            this.PBgamecover.Location = new System.Drawing.Point(12, 6);
-            this.PBgamecover.Name = "PBgamecover";
-            this.PBgamecover.Size = new System.Drawing.Size(237, 246);
-            this.PBgamecover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PBgamecover.TabIndex = 6;
-            this.PBgamecover.TabStop = false;
-            this.PBgamecover.Click += new System.EventHandler(this.PBgamecover_Click);
+            this.PoplateBTN.Text = "Populate";
+            this.PoplateBTN.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PoplateBTN_MouseDown);
             // 
             // Descriptionpanel
             // 
@@ -279,6 +261,7 @@ namespace Gateway
             this.panel1.Controls.Add(this.AvTimeLBL);
             this.panel1.Controls.Add(this.BrowseWb);
             this.panel1.Controls.Add(this.TimSpentLBL);
+            this.panel1.Controls.Add(this.rattextlbl);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.TSpentlbl);
             this.panel1.Controls.Add(this.SZlbl);
@@ -296,6 +279,15 @@ namespace Gateway
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(539, 547);
             this.panel1.TabIndex = 5;
+            // 
+            // Rlbl
+            // 
+            this.Rlbl.Location = new System.Drawing.Point(68, 197);
+            this.Rlbl.Name = "Rlbl";
+            this.Rlbl.RatingColor = System.Drawing.Color.Gold;
+            this.Rlbl.ReadOnly = true;
+            this.Rlbl.Size = new System.Drawing.Size(120, 28);
+            this.Rlbl.TabIndex = 8;
             // 
             // pbsaveupload
             // 
@@ -320,11 +312,11 @@ namespace Gateway
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 228);
+            this.label5.Location = new System.Drawing.Point(9, 258);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(89, 16);
+            this.label5.Size = new System.Drawing.Size(93, 16);
             this.label5.TabIndex = 0;
-            this.label5.Text = "Game Traiiler";
+            this.label5.Text = "Game Traiiler:";
             // 
             // label6
             // 
@@ -384,9 +376,10 @@ namespace Gateway
             this.BrowseWb.DefaultBackgroundColor = System.Drawing.Color.White;
             this.BrowseWb.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BrowseWb.ForeColor = System.Drawing.Color.DarkMagenta;
-            this.BrowseWb.Location = new System.Drawing.Point(0, 247);
+            this.BrowseWb.Location = new System.Drawing.Point(0, 274);
             this.BrowseWb.Name = "BrowseWb";
-            this.BrowseWb.Size = new System.Drawing.Size(539, 300);
+            this.BrowseWb.Size = new System.Drawing.Size(539, 273);
+            this.BrowseWb.Source = new System.Uri("https://ezanple.com", System.UriKind.Absolute);
             this.BrowseWb.TabIndex = 7;
             this.BrowseWb.ZoomFactor = 1D;
             // 
@@ -435,9 +428,20 @@ namespace Gateway
             this.SZlbl.Text = "***";
             this.SZlbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // Rdate
+            // 
+            this.Rdate.Font = new System.Drawing.Font("Gilroy Light", 9.749999F);
+            this.Rdate.ForeColor = System.Drawing.Color.DarkSeaGreen;
+            this.Rdate.Location = new System.Drawing.Point(104, 60);
+            this.Rdate.Name = "Rdate";
+            this.Rdate.Size = new System.Drawing.Size(103, 16);
+            this.Rdate.TabIndex = 0;
+            this.Rdate.Text = "***";
+            this.Rdate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // svlolbl
             // 
-            this.svlolbl.Font = new System.Drawing.Font("Gilroy Light", 9.749999F);
+            this.svlolbl.Font = new System.Drawing.Font("Gilroy Light", 8F);
             this.svlolbl.ForeColor = System.Drawing.Color.DarkSeaGreen;
             this.svlolbl.Location = new System.Drawing.Point(321, 61);
             this.svlolbl.Name = "svlolbl";
@@ -482,10 +486,21 @@ namespace Gateway
             this.SizeLBL.Text = "Size:";
             this.SizeLBL.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Nlbl
+            // 
+            this.Nlbl.Font = new System.Drawing.Font("Gilroy Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Nlbl.ForeColor = System.Drawing.Color.DarkSeaGreen;
+            this.Nlbl.Location = new System.Drawing.Point(54, 22);
+            this.Nlbl.Name = "Nlbl";
+            this.Nlbl.Size = new System.Drawing.Size(142, 16);
+            this.Nlbl.TabIndex = 0;
+            this.Nlbl.Text = "***";
+            this.Nlbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // gmfolbl
             // 
             this.gmfolbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gmfolbl.Font = new System.Drawing.Font("Gilroy Light", 9.749999F);
+            this.gmfolbl.Font = new System.Drawing.Font("Gilroy Light", 8F);
             this.gmfolbl.ForeColor = System.Drawing.Color.DarkSeaGreen;
             this.gmfolbl.Location = new System.Drawing.Point(321, 23);
             this.gmfolbl.Name = "gmfolbl";
@@ -521,7 +536,11 @@ namespace Gateway
             // Headerpanel
             // 
             this.Headerpanel.BackColor = System.Drawing.Color.Transparent;
+            this.Headerpanel.Controls.Add(this.LaunchBTN);
             this.Headerpanel.Controls.Add(this.exitbutton);
+            this.Headerpanel.Controls.Add(this.guna2Button2);
+            this.Headerpanel.Controls.Add(this.PoplateBTN);
+            this.Headerpanel.Controls.Add(this.ogamefolderBTN);
             this.Headerpanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.Headerpanel.Location = new System.Drawing.Point(0, 0);
             this.Headerpanel.Name = "Headerpanel";
@@ -557,36 +576,31 @@ namespace Gateway
             this.exitbutton.Text = "EXIT";
             this.exitbutton.Click += new System.EventHandler(this.ExitBTN_Click);
             // 
-            // Nlbl
+            // rattextlbl
             // 
-            this.Nlbl.Font = new System.Drawing.Font("Gilroy Light", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Nlbl.ForeColor = System.Drawing.Color.DarkSeaGreen;
-            this.Nlbl.Location = new System.Drawing.Point(54, 22);
-            this.Nlbl.Name = "Nlbl";
-            this.Nlbl.Size = new System.Drawing.Size(142, 16);
-            this.Nlbl.TabIndex = 0;
-            this.Nlbl.Text = "***";
-            this.Nlbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.rattextlbl.Font = new System.Drawing.Font("Gilroy Light", 9.749999F);
+            this.rattextlbl.ForeColor = System.Drawing.Color.DarkSeaGreen;
+            this.rattextlbl.Location = new System.Drawing.Point(194, 209);
+            this.rattextlbl.Name = "rattextlbl";
+            this.rattextlbl.Size = new System.Drawing.Size(92, 16);
+            this.rattextlbl.TabIndex = 0;
+            this.rattextlbl.Text = "***";
+            this.rattextlbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Rdate
+            // PBgamecover
             // 
-            this.Rdate.Font = new System.Drawing.Font("Gilroy Light", 9.749999F);
-            this.Rdate.ForeColor = System.Drawing.Color.DarkSeaGreen;
-            this.Rdate.Location = new System.Drawing.Point(104, 60);
-            this.Rdate.Name = "Rdate";
-            this.Rdate.Size = new System.Drawing.Size(103, 16);
-            this.Rdate.TabIndex = 0;
-            this.Rdate.Text = "***";
-            this.Rdate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Rlbl
-            // 
-            this.Rlbl.Location = new System.Drawing.Point(56, 193);
-            this.Rlbl.Name = "Rlbl";
-            this.Rlbl.RatingColor = System.Drawing.Color.Gold;
-            this.Rlbl.ReadOnly = true;
-            this.Rlbl.Size = new System.Drawing.Size(120, 28);
-            this.Rlbl.TabIndex = 8;
+            this.PBgamecover.BackColor = System.Drawing.Color.MediumPurple;
+            this.PBgamecover.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.PBgamecover.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.PBgamecover.FillColor = System.Drawing.Color.Transparent;
+            this.PBgamecover.ImageRotate = 0F;
+            this.PBgamecover.Location = new System.Drawing.Point(6, 6);
+            this.PBgamecover.Name = "PBgamecover";
+            this.PBgamecover.Size = new System.Drawing.Size(345, 246);
+            this.PBgamecover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PBgamecover.TabIndex = 6;
+            this.PBgamecover.TabStop = false;
+            this.PBgamecover.Click += new System.EventHandler(this.PBgamecover_Click);
             // 
             // GameCard
             // 
@@ -601,13 +615,13 @@ namespace Gateway
             this.Click += new System.EventHandler(this.GameCard_Click);
             this.grad.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PBgamecover)).EndInit();
             this.Descriptionpanel.ResumeLayout(false);
             this.Descriptionpanel.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BrowseWb)).EndInit();
             this.Headerpanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PBgamecover)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -648,5 +662,6 @@ namespace Gateway
         private System.Windows.Forms.Label Rdate;
         private System.Windows.Forms.Label Nlbl;
         private Guna.UI2.WinForms.Guna2RatingStar Rlbl;
+        private System.Windows.Forms.Label rattextlbl;
     }
 }

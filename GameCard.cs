@@ -26,12 +26,15 @@ using System.Text.Json;
 using System.Web.Script.Serialization;
 using System.Net.Http.Headers;
 using AForge.Video.DirectShow;
+
 using System.Runtime.InteropServices;
+
 
 namespace Gateway
 {
     public partial class GameCard : Form
     {
+
         private bool isDragging = false;
         private Point lastLocation;
         private Stopwatch gameTimer = new Stopwatch();
@@ -52,22 +55,33 @@ namespace Gateway
             InitializeComponent();
             LoadGames();
             LoadApps();
+            SearchAndDisplayTrailer(gameData);
             this.gameData = gameData;
             // Initialize labels with game data
             Nlbl.Text = gameData.Name;
             gmfolbl.Text = gameData.GameFolder;
             SZlbl.Text = gameData.GameSize;
             svlolbl.Text = gameData.SaveFolder;
-
+            PBgamecover.Load(gameData.ImgPath);
             TSpentlbl.Text = gameData.GameTime.ToString();
 
-            
 
         }
+
+
+
+
+
 
         private async void PBgamecover_Click(object sender, EventArgs e)
         {
             /*
+
+
+
+        private async void PBgamecover_Click(object sender, EventArgs e)
+        {
+
             string gameName3 = Microsoft.VisualBasic.Interaction.InputBox("Enter the name of the game", "Game Name", "Elden Ring");
             HttpClient client = new HttpClient();
             string url = "https://api.rawg.io/api/games?search=" + gameName3 + api;
@@ -78,71 +92,152 @@ namespace Gateway
             Image image = DownloadImage(coverUrl);
             PBgamecover.Image = ResizeImage(image, PBgamecover.Size);
             //grad.BackgroundImage = PBgamecover.Image;
+
             */
+
         }
-        private Image DownloadImage(string url)
+
+        private void PoplateBTN_MouseDown(object sender, MouseEventArgs e)
         {
-            using (WebClient client = new WebClient())
+            if (e.Button == MouseButtons.Right)
             {
-                byte[] imageData = client.DownloadData(url);
-                using (MemoryStream stream = new MemoryStream(imageData))
-                {
-                    return Image.FromStream(stream);
-                }
+                GameData gameData = (GameData)((Guna2Button)sender).Tag;
+                SearchForm SF = new SearchForm();
+                SF.Show();
+            }
+
+            if (e.Button == MouseButtons.Left)
+            {
+                AutoFill();
             }
         }
-        private Image ResizeImage(Image image, Size size)
-        {
-            Bitmap result = new Bitmap(size.Width, size.Height);
-            using (Graphics graphics = Graphics.FromImage(result))
-            {
-                graphics.DrawImage(image, new Rectangle(Point.Empty, size));
-            }
-            return result;
-        }
+
         private async void PoplateBTN_Click(object sender, EventArgs e)
         {
-            AutoFill();
+            
         }
         public async void AutoFill()
         {
             string gameName = Microsoft.VisualBasic.Interaction.InputBox("Enter the name of the game", "Game Name", gameData.Name);
-            HttpClient client = new HttpClient();
-            string url = "https://api.rawg.io/api/games?search=" + gameName + api;
-            HttpResponseMessage response = await client.GetAsync(url);
-            string jsonResponse = await response.Content.ReadAsStringAsync();
-            dynamic responseObject = JsonConvert.DeserializeObject(jsonResponse);
-            string coverUrl = responseObject.results[0].background_image;
-            Image image = DownloadImage(coverUrl);
-            PBgamecover.Image = ResizeImage(image, PBgamecover.Size);
+            string gameId = string.Empty;
 
-            // Game name
-            string name = responseObject.results[0].name;
-            Nlbl.Text = name;
+            using (var client = new HttpClient())
+            {
+                string url = $"https://api.rawg.io/api/games?search={gameName}&key="+api;
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    dynamic data = JObject.Parse(json);
+                    if (data.results.Count > 0)
+                    {
+                        gameId = data.results[0].id;
+                        string coverUrl = data.results[0].background_image;
+                        PBgamecover.Load(coverUrl);
+                        Rdate.Text = data.results[0].released;
+                        Rlbl.Value = data.results[0].rating;
+                        rattextlbl.Text = Rlbl.Value.ToString();
+                        GameDescriptionLBL.Text = data.results[0].description_raw;
+                    }
+                }
+                else
+                {
+                    throw new Exception("Failed to get game data from RAWG API");
+                }
+            }
 
-            // Release date
-            string releaseDate = responseObject.results[0].released;
-            Rdate.Text = releaseDate;
+            SearchAndDisplayTrailer(gameData);
 
-            // Rating
-            float rating = responseObject.results[0].rating;
-            Rlbl.Value = rating;
-
-            // Description
-            string description = responseObject.results[0].description_raw;
-            GameDescriptionLBL.Text = description;
-
-            //afterwards
             gameData.Name = gameName;
         }
+
+
+        public async void SearchAndDisplayTrailer(GameData gameData)
+        {
+            gameName = gameData.Name;
+            string apiKey = "AIzaSyBaG8xUbLGUQ3Fs9K4jWUj-b-JNEd-PDZA";
+            string searchUrl = $"https://www.googleapis.com/youtube/v3/search?part=snippet&contentDetails&maxResults=1&q={gameName}+trailer&type=video&key={apiKey}";
+
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync(searchUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    dynamic data = JObject.Parse(json);
+                    if (data.items.Count > 0)
+                    {
+                        string videoId = data.items[0].id.videoId;
+                        string contentRating = data.items[0].contentDetails?.contentRating?.ytRating;
+                        if (contentRating == "ytAgeRestricted")
+                        {
+                            MessageBox.Show("This video is age-restricted and can only be viewed by logged-in users over a certain age. Please log in to your YouTube account to view the video.", "Age Restricted Video", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Process.Start("https://www.youtube.com/login");
+                        }
+                        else
+                        {
+                            string html = $"<html><body><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/{videoId}\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+                            await BrowseWb.EnsureCoreWebView2Async();
+                            BrowseWb.NavigateToString(html);
+                        }
+                    }
+                }
+                else
+                {
+                    throw new Exception("Failed to search for game trailer on YouTube");
+                }
+            }
+        }
+
+
+
+
+        private async Task<string> GetVideoId(string gameId)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = $"https://api.rawg.io/api/games/{gameId}?key="+api;
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    dynamic data = JObject.Parse(json);
+                    return data.clip.clips.full;
+                }
+                else
+                {
+                    throw new Exception("Failed to get video ID from RAWG API");
+                }
+            }
+        }
+
+
+
+
+
         private void ExitBTN_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
+
+        private void waveViewer1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void elementHost1_ChildChanged(object sender, System.Windows.Forms.Integration.ChildChangedEventArgs e)
+        {
+
+        }
+
+
+
         private void GameCard_Load(object sender, EventArgs e)
         {
-            
+
         }
+
         private void LoadGames()
         {
             if (File.Exists(GAMES_FILE_PATH))
@@ -176,7 +271,7 @@ namespace Gateway
 
         private void LaunchBTN_Click(object sender, EventArgs e)
         {
-            
+
 
             // Start the game timer
             gameTimer.Start();
@@ -246,5 +341,12 @@ namespace Gateway
         {
             TSpentlbl.Text = gameData.GameTime.ToString();
         }
+
+        private void CusPop_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+       
     }
 }

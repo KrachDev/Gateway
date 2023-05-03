@@ -176,7 +176,7 @@ namespace Gateway
             gameButton.MouseDown += GameButton_MouseUp; // new event handler for MouseDown
             GamesFlow.Controls.Add(gameButton);
         }
-
+         
         private void AddAppButton(AppData appData)
         {
             Guna2Button appButton = new Guna2Button();
@@ -505,6 +505,12 @@ namespace Gateway
         private void Headerpanel_MouseUp(object sender, MouseEventArgs e)
         {
             isDragging = false;
+        }
+
+        private void TestButton_Click(object sender, EventArgs e)
+        {
+            SearchForm SF = new SearchForm();
+            SF.Show();
         }
     }
 }

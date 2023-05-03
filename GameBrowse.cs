@@ -159,6 +159,19 @@ namespace Gateway
             Shortpanel.Controls.Add(gameButton);
         }
 
+        private void GameButton_Click(object sender, EventArgs e)
+        {
+            var button = (Guna2Button)sender;
+            var customSite = (CustomSitesDatabase)button.Tag;
+            if (Uri.TryCreate(customSite.Site_Url, UriKind.Absolute, out Uri uri))
+            {
+                BrowserWb.CoreWebView2.Navigate(uri.ToString());
+            }
+
+            // handle button click event
+            SaveData();
+        }
+
         private void GameButton_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -189,6 +202,7 @@ namespace Gateway
                 customSitesList.Remove(customSite);
                 Shortpanel.Controls.Remove(button);
             }
+
             if (e.Button == MouseButtons.Left)
             {
                 var button = (Guna2Button)sender;
@@ -204,6 +218,11 @@ namespace Gateway
 
                 // handle button click event
                 SaveData();
+
+
+            // handle button click event
+            SaveData();
+
         }
         private List<CustomSitesDatabase> customSitesList = new List<CustomSitesDatabase>();
         private void PlusShort_Click(object sender, EventArgs e)
